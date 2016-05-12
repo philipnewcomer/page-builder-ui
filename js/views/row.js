@@ -55,12 +55,7 @@ var RowView = Backbone.View.extend({
 
     events: {
         "click .button.row_delete":       "handleRowDelete",
-        "click .button.row_edit-columns": "handleEditColumns",
-
-        "dragstart .row__header":     "handleDragStart",
-        "dragend   .row__header":     "handleDragEnd",
-        "dragover  .row__droptarget": "handleDragOver",
-        "drop      .row__droptarget": "handleDrop"
+        "click .button.row_edit-columns": "handleEditColumns"
     },
 
     handleRowDelete: function( event ) {
@@ -71,47 +66,6 @@ var RowView = Backbone.View.extend({
     handleEditColumns: function( event ) {
         event.preventDefault();
         App.editColumnsLightbox.open( this );
-    },
-
-    // Drag and Drop Events
-
-    handleDragStart: function( event ) {
-        event.stopPropagation();
-
-        this.$el.addClass("-dragging");
-
-        App.currentDnD.type = "row";
-        App.currentDnD.view = this;
-    },
-
-    handleDragEnd: function( event ) {
-        event.stopPropagation();
-
-        this.$el.removeClass("-dragging");
-    },
-
-    handleDragOver: function( event ) {
-        event.stopPropagation();
-
-        if ( "row" !== App.currentDnD.type ) {
-            return;
-        }
-
-        if ( this.$el.hasClass("-dragging") || this.$el.prev().hasClass("-dragging") ) {
-            return;
-        }
-
-        event.preventDefault();
-    },
-
-    handleDrop: function( event ) {
-        event.stopPropagation();
-
-        var oldIndex = App.currentDnD.view.$el.index();
-        var newIndex = this.$el.index();
-
-        if ( oldIndex < newIndex ) newIndex--;
-        this.model.collection.moveItem( oldIndex, newIndex );
     },
 
     // Utility

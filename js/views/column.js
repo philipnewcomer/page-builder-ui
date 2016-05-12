@@ -53,45 +53,11 @@ var ColumnView = Backbone.View.extend({
     // View Events
 
     events: {
-        "click .button.module-teaser_add": "handleModuleAdd",
-
-        "dragover .module-teaser__droptarget": "handleDragOver",
-        "drop     .module-teaser__droptarget": "handleDrop"
+        "click .button.module-teaser_add": "handleModuleAdd"
     },
 
     handleModuleAdd: function( event ) {
         event.preventDefault();
         App.addModuleLightbox.open( this.modules );
-    },
-
-    // Drag and Drop Events
-
-    handleDragOver: function( event ) {
-        event.stopPropagation();
-
-        if ( "module" !== App.currentDnD.type ) {
-            return;
-        }
-
-        if ( this.$(".column__module-teasers > .module-teaser").last().hasClass("-dragging") ) {
-            return;
-        }
-
-        event.preventDefault();
-    },
-
-    handleDrop: function( event ) {
-        event.stopPropagation();
-
-        var draggedModel = App.currentDnD.view.model;
-        var oldIndex     = App.currentDnD.view.$el.index();
-        var newIndex     = this.modules.length - 1;
-
-        if ( this.modules.contains( draggedModel ) ) {
-            this.modules.moveItem( oldIndex, newIndex );
-        } else {
-            this.modules.add( draggedModel.toJSON() );
-            draggedModel.destroy();
-        }
     }
 });

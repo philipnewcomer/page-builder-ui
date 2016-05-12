@@ -2,10 +2,6 @@
     font-size: 14px;
 }
 
-[draggable] {
-    cursor: move;
-}
-
 input,
 textarea {
     display: block;
@@ -49,10 +45,6 @@ select {
 }
 
 /*** Rows ***/
-
-.row__droptarget {
-    height: 20px;
-}
 
 .row__main {
     border: 1px solid #aaa;
@@ -100,9 +92,6 @@ select {
 
 /*** Modules ***/
 
-.module-teaser__droptarget {
-    height: 15px;
-}
 .module-teaser__main {
     padding: 5px;
     border: 1px solid #ccc;

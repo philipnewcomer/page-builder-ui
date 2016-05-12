@@ -17,12 +17,6 @@ var AppView = Backbone.View.extend({
         // Render rows
         this.renderAllRows();
 
-        // Initialize Drag And Drop
-        this.currentDnD = {
-            type: null,
-            view: null
-        };
-
         // Initialize lightboxes
         this.addModuleLightbox   = new AddModuleLightboxView;
         this.editModuleLightbox  = new EditModuleLightboxView;
@@ -51,39 +45,11 @@ var AppView = Backbone.View.extend({
     // View Events
 
     events: {
-        "click .button.row_add": "handleRowAdd",
-
-        "dragover .row__droptarget": "handleDragOver",
-        "drop     .row__droptarget": "handleDrop"
+        "click .button.row_add": "handleRowAdd"
     },
 
     handleRowAdd: function( event ) {
         event.preventDefault();
         this.rows.add({});
-    },
-
-    // Drag and Drop Events
-
-    handleDragOver: function() {
-        event.stopPropagation();
-
-        if ( "row" !== App.currentDnD.type ) {
-            return;
-        }
-
-        if ( this.$(".app__rows > .row").last().hasClass("-dragging") ) {
-            return;
-        }
-
-        event.preventDefault();
-    },
-
-    handleDrop: function( event ) {
-        event.stopPropagation();
-
-        var oldIndex = App.currentDnD.view.$el.index();
-        var newIndex = this.rows.length - 1;
-
-        this.rows.moveItem( oldIndex, newIndex );
     }
 });

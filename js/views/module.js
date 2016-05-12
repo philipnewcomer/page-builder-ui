@@ -23,12 +23,7 @@ var ModuleTeaserView = Backbone.View.extend({
 
     events: {
         "click .button.module-teaser_edit":   "handleModuleEdit",
-        "click .button.module-teaser_delete": "handleModuleDelete",
-
-        "dragstart .module-teaser__main":       "handleDragStart",
-        "dragend   .module-teaser__main":       "handleDragEnd",
-        "dragover  .module-teaser__droptarget": "handleDragOver",
-        "drop      .module-teaser__droptarget": "handleDrop"
+        "click .button.module-teaser_delete": "handleModuleDelete"
     },
 
     handleModuleEdit: function( event ) {
@@ -40,52 +35,5 @@ var ModuleTeaserView = Backbone.View.extend({
     handleModuleDelete: function( event ) {
         event.preventDefault();
         this.model.destroy();
-    },
-
-    // Drag and Drop Events
-
-    handleDragStart: function( event ) {
-        event.stopPropagation();
-
-        this.$el.addClass("-dragging");
-
-        App.currentDnD.type = "module";
-        App.currentDnD.view = this;
-    },
-
-    handleDragEnd: function( event ) {
-        event.stopPropagation();
-
-        this.$el.removeClass("-dragging");
-    },
-
-    handleDragOver: function( event ) {
-        event.stopPropagation();
-
-        if ( "module" !== App.currentDnD.type ) {
-            return;
-        }
-
-        if ( this.$el.hasClass("-dragging") || this.$el.prev().hasClass("-dragging") ) {
-            return;
-        }
-
-        event.preventDefault();
-    },
-
-    handleDrop: function( event ) {
-        event.stopPropagation();
-
-        var draggedModel = App.currentDnD.view.model;
-        var oldIndex     = App.currentDnD.view.$el.index();
-        var newIndex     = this.$el.index();
-
-        if ( this.model.collection.contains( draggedModel ) ) {
-            if ( oldIndex < newIndex ) newIndex--;
-            this.model.collection.moveItem( oldIndex, newIndex );
-        } else {
-            this.model.collection.add( draggedModel.toJSON(), { at: newIndex } );
-            draggedModel.destroy();
-        }
     }
 });

@@ -13,7 +13,6 @@
             <div class="app__rows"></div>
             <div class="app__footer">
                 <div class="app__footer_actions">
-                    <div class="row__droptarget"></div>
                     <a class="button row_add" href="#">Add Row</a>
                 </div>
             </div>
@@ -75,9 +74,8 @@
         <div class="templates">
 
             <script type="text/template" id="template-row">
-                <div class="row__droptarget"></div>
                 <div class="row__main">
-                    <div class="row__header" draggable="true">
+                    <div class="row__header">
                         <div class="row__header_actions">
                             <a href="#" class="button row_edit-columns">Change Columns</a>
                             <a href="#" class="button row_delete">Delete</a>
@@ -98,8 +96,7 @@
             </script>
 
             <script type="text/template" id="template-module_teaser">
-                <div class="module-teaser__droptarget"></div>
-                <div class="module-teaser__main" draggable="true">
+                <div class="module-teaser__main">
                     <div class="module-teaser__name"><%= moduleTemplate.name %></div>
                     <div class="module-teaser__actions">
                         <a href="#" class="button module-teaser_edit">Edit</a>
