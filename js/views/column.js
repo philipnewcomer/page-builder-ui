@@ -37,6 +37,21 @@ var ColumnView = Backbone.View.extend({
         this.$el.html( this.template( this.model.toJSON() ) );
         this.$el.removeClass().addClass("column").addClass( "-" + this.model.get("width") );
         this.modules.each( this.renderNewModule, this );
+
+        // Initialize jQuery UI Sortable
+        this.$(".column__module-teasers").sortable({
+            connectWith: '.column__module-teasers',
+            cursor: 'move',
+            helper: function( event, element ) {
+                return $('<div class="module-teaser__drag-helper" />');
+            },
+            placeholder: 'module-teaser__drop-placeholder',
+            receive: this.handleReceive.bind( this ),
+            start: this.handleDragStart.bind( this ),
+            tolerance: 'pointer',
+            update: this.handleDragUpdate.bind( this )
+        });
+
         return this;
     },
 
@@ -53,11 +68,37 @@ var ColumnView = Backbone.View.extend({
     // View Events
 
     events: {
-        "click .button.module-teaser_add": "handleModuleAdd"
+        "click .button.module-teaser_add": "handleModuleAdd",
+
+        "drop": "handleItemDrop"
     },
 
     handleModuleAdd: function( event ) {
         event.preventDefault();
         App.addModuleLightbox.open( this.modules );
+    },
+
+    handleDragStart: function( event, ui ) {
+        ui.item.indexStart = ui.item.index();
+        ui.item.sendingCollection = this.modules;
+        ui.item.sendingModel = this.modules.at( ui.item.index() );
+    },
+
+    handleDragUpdate: function( event, ui ) {
+        ui.item.trigger( 'drop', ui );
+    },
+
+    handleItemDrop: function( event, ui ) {
+        // Only run if the item is in the same collection. Items dragged across collections are handled by the receive function.
+        if ( this.modules !== ui.item.sendingCollection ) {
+            return;
+        }
+
+        this.modules.moveItem( ui.item.indexStart, ui.item.index() );
+    },
+
+    handleReceive: function( event, ui ) {
+        this.modules.add( ui.item.sendingModel.toJSON(), { at: ui.item.index() } );
+        ui.item.sendingModel.destroy();
     }
 });

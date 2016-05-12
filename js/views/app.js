@@ -21,6 +21,19 @@ var AppView = Backbone.View.extend({
         this.addModuleLightbox   = new AddModuleLightboxView;
         this.editModuleLightbox  = new EditModuleLightboxView;
         this.editColumnsLightbox = new EditColumnsLightboxView;
+
+        // Initialize jQuery UI Sortable
+        this.$(".app__rows").sortable({
+            axis: 'y',
+            cursor: 'move',
+            handle: '.row__header',
+            helper: function( event, element ) {
+                return $('<div class="row__drag-helper" />');
+            },
+            placeholder: 'row__drop-placeholder',
+            start: this.handleDragStart.bind( this ),
+            stop: this.handleDragStop.bind( this )
+        });
     },
 
     serialize: function() {
@@ -51,5 +64,13 @@ var AppView = Backbone.View.extend({
     handleRowAdd: function( event ) {
         event.preventDefault();
         this.rows.add({});
+    },
+
+    handleDragStart: function( event, ui ) {
+        ui.item.indexStart = ui.item.index();
+    },
+
+    handleDragStop: function( event, ui ) {
+        this.rows.moveItem( ui.item.indexStart, ui.item.index() );
     }
 });
