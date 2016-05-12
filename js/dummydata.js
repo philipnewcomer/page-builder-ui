@@ -48,7 +48,7 @@ var dummyData = {
                             }
                         },
                         {
-                            type: "featured_item",
+                            type: "dummy",
                             settings: {
                                 item_id: 2
                             }
@@ -95,7 +95,6 @@ var dummyData = {
         }
     ]
 };
-dummyData = [];
 
 var registeredModules = {
     heading: {
@@ -113,7 +112,7 @@ var registeredModules = {
         },
         form: '<p><label>Heading<input name="heading_content"></label></p><p><label>Content<textarea name="body_content"></textarea></label></p>'
     },
-    featured_item: {
+    dummy: {
         name: "Dummy Module",
         defaults: {
             field_input: "Input field default",
