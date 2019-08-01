@@ -1,1 +1,37 @@
 @import "node_modules/sanitize.css/sanitize";
+
+:root {
+	font-family: 'Helvetica Neue';
+}
+
+.row {
+	border: 1px solid #eee;
+	margin: 1rem;
+
+	&-header {
+		background-color: #eee;
+		padding: 0.25rem;
+		font-weight: bold;
+	}
+
+	&-columns {
+		overflow: hidden;
+	}
+}
+
+.column {
+	float: left;
+	width: 100%;
+
+	&.one-half { width: 50%; }
+	&.one-third { width: 33.333%; }
+	&.two-thirds { width: 66.666%; }
+	&.one-fourth { width: 25%; }
+	&.three-fourths { width: 75%; }
+}
+
+.module {
+	border: 1px solid #ccc;
+	padding: 0.25rem;
+	margin: 0.5rem;
+}
